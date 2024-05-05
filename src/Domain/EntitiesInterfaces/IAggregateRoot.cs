@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.EntitiesInterfaces
+namespace Domain
 {
     public interface IAggregateRoot : IEntity
     {

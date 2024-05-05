@@ -1,4 +1,5 @@
 ﻿using Domain.EntitiesBaseClass;
+using Domain.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,21 @@ namespace Domain.Entities
 {
     public abstract class Customer : AggregateRoot
     {
-        protected Customer(string firstname, string phoneNumber, string email, string bankAccountNumber, string lastName)
+        public DateTime DateOfBirth { get; set; }
+        public string Firstname { get; set; }
+        public string LastName { get; set; }
+        public PhoneNumber PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public BankAccountNumber BankAccountNumber { get; set; }
+        protected Customer(string firstname, PhoneNumber phoneNumber, string email, BankAccountNumber bankAccountNumber, string lastName, DateTime dateOfBirth)
         {
             Firstname = firstname;
             PhoneNumber = phoneNumber;
             Email = email;
             BankAccountNumber = bankAccountNumber;
             LastName = lastName;
+            DateOfBirth = dateOfBirth;
         }
-        public DateTime DateOfBirth { get; set; }
-        public string Firstname { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string BankAccountNumber { get; set; }
+       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace Domain.WriteEntities
     {
         public CustomerWrite(
            string firstname,
-           string phoneNumber,
+           PhoneNumber phoneNumber,
            string email,
-           string bankAccountNumber,
-           string lastName) :
-           base(firstname, phoneNumber, email, bankAccountNumber, lastName)
+           BankAccountNumber bankAccountNumber,
+           string lastName,
+           DateTime dateOfBirth
+           ) :
+           base(firstname, phoneNumber, email, bankAccountNumber, lastName, dateOfBirth)
         {
         }
     }
