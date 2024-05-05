@@ -1,4 +1,5 @@
 ﻿using Domain.ValueObject;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,28 @@ namespace Domain.Test
 {
     public class PhoneNumber_Test
     {
-        [Theory]
-        [InlineData("+989384563280", "")]
-        [InlineData("+9893845632801", DomainMessages.InValidNumber)]
-        [InlineData("+982133367289", "")]
-        public void PhoneNumber_Validation_Test(string number, string message)
+        [Fact]
+        public void PhoneNumber_ValidationError_Test()
         {
-            try
-            {
-                PhoneNumber phoneNumber = new PhoneNumber(number);
+            string number = "+9893845632801";
 
-                // Assert
-                Assert.Equal(number, phoneNumber.ToString());
+            var result = Assert.Throws<ArgumentException>(() => new PhoneNumber(number));
 
-            }
-            catch (Exception)
-            {
-                var result = Assert.Throws<ArgumentException>(() => new PhoneNumber(number));
-                Assert.Equal(message, result.Message);
-            }
+            Assert.Equal(DomainMessages.InValidPhonNumber, result.Message);
         }
+        [Fact]
+        public void PhoneNumber_ValidationSuccess_Test()
+        {
+            string _mobileNumber = "+989384563280";
+            string _phoneNumber = "+989384563280";
+
+            PhoneNumber mobileNumber = new PhoneNumber(_mobileNumber);
+            PhoneNumber phoneNumber = new PhoneNumber(_phoneNumber);
+
+            Assert.Equal(_phoneNumber, phoneNumber.ToString());
+            Assert.Equal(_mobileNumber, mobileNumber.ToString());
+        }
+        
         [Theory]
         [InlineData("+989384563280", "+989384563280", true)]
         [InlineData("+982133367289", "+982133367288", false)]

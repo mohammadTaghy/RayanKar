@@ -15,13 +15,20 @@ namespace Domain.ValueObject
 
         public PhoneNumber(string number)
         {
-            PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-            PhoneNumbers.PhoneNumber phoneNumber = phoneUtil.Parse(number, null);
-            PhoneNumberType phoneNumberType = phoneUtil.GetNumberType(phoneNumber);
-            this._phoneNumber = phoneNumberType == PhoneNumberType.MOBILE|| phoneNumberType==PhoneNumberType.FIXED_LINE || phoneNumberType == PhoneNumberType.FIXED_LINE_OR_MOBILE ?
+            PhoneNumberType phoneNumberType = GetPhoneNumberType(number);
+            this._phoneNumber = phoneNumberType == PhoneNumberType.MOBILE || phoneNumberType == PhoneNumberType.FIXED_LINE || phoneNumberType == PhoneNumberType.FIXED_LINE_OR_MOBILE ?
                 number :
                 throw new ArgumentException("PhoneNumber is incorrect");
         }
+
+        private PhoneNumberType GetPhoneNumberType(string number)
+        {
+            PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
+            PhoneNumbers.PhoneNumber phoneNumber = phoneUtil.Parse(number, null);
+            PhoneNumberType phoneNumberType = phoneUtil.GetNumberType(phoneNumber);
+            return phoneNumberType;
+        }
+
         public bool Equals(PhoneNumber? other)
         {
             if (other is null)
