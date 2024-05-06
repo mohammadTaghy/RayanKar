@@ -16,10 +16,12 @@ namespace Domain.ReadEntitis
            string email,
            BankAccountNumber bankAccountNumber,
            string lastName,
-           DateTime dateOfBirth
+           DateTime dateOfBirth,
+           int id
            ) :
            base(firstname, phoneNumber, email, bankAccountNumber, lastName, dateOfBirth)
         {
+            this.Id = id;
         }
     }
 }

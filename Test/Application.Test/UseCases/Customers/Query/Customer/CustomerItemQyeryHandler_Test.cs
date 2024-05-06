@@ -52,7 +52,8 @@ namespace Application.Test.UseCases.Customers.Query
                                         "taghy@gmail.com",
                                         new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021"),
                                         "Yami",
-                                        DateTime.Now.AddYears(-1)
+                                        DateTime.Now.AddYears(-1),
+                                        1
                                     )
                ));
             _mapper.Setup(p => p.Map<CustomerDto>(It.IsAny<CustomerRead>())).Returns(
