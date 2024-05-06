@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.IRepositoryRead
 {
-    public interface ICustomerReadRepository: IRepositoryReadBase<CustomerRead>
+    public interface ICustomerReadRepository : IRepositoryReadBase<CustomerRead>
     {
+        
     }
 }
