@@ -18,7 +18,7 @@ namespace Application.Test.UseCases.Customers.Command
             _customer = new CreateCustomerCommand(
                 "Mohammad",
                 "Yami",
-                DateTime.Parse("01/13/2010"),
+                DateTime.Now.AddYears(-1),
                 "+989384563280",
                 "taghy@gmail.com",
                 "IR830120010000001387998021"
@@ -40,7 +40,7 @@ namespace Application.Test.UseCases.Customers.Command
         public void CreateCustomerCommandHandler_GivenNullRequest_ShouldArgumentNullException()
         {
 
-            var exception = Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+             Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
 
             _writeRepoMock.Verify(p => p.Insert(It.IsAny<CustomerWrite>()), Times.Never);
         }
@@ -63,13 +63,13 @@ namespace Application.Test.UseCases.Customers.Command
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
                 .Returns(new Tuple<bool, string>(true, message));
 
-            var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
+            await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
             _writeRepoMock.Verify(p => p.Insert(It.IsAny<CustomerWrite>()), Times.Never);
         }
 
         [Fact]
-        public async void CreateCustomerCommandHandler_CorrectRequest_OkResult()
+        public async Task CreateCustomerCommandHandler_CorrectRequest_OkResult()
         {
             string message = "";
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))

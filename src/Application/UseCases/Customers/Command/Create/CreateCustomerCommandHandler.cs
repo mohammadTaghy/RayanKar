@@ -42,13 +42,17 @@ namespace Application.UseCases.Customers.Command.Create
         private async Task<CustomerWrite> InsertCustomer(CreateCustomerCommand request)
         {
             CustomerWrite customer = _mapper.Map<CustomerWrite>(request);
-            Tuple<bool, string> existUser = _writeRepo.IsExsists(customer);
-            if (existUser.Item1)
-                throw new ValidationException(existUser.Item2);
+            CheckCustomerIsDuplicate(customer);
             await _writeRepo.Insert(customer);
             return customer;
         }
 
-        
+        private void CheckCustomerIsDuplicate(CustomerWrite customer)
+        {
+            Tuple<bool, string> existUser = _writeRepo.IsExsists(customer);
+            if (existUser.Item1)
+                throw new ValidationException(existUser.Item2);
+        }
+
     }
 }
