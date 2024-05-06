@@ -1,14 +1,10 @@
 ﻿using Domain.ReadEntitis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNet.OData.Query;
 
 namespace Application.IRepositoryRead
 {
     public interface ICustomerReadRepository : IRepositoryReadBase<CustomerRead>
     {
-        
+        Task<Tuple<List<CustomerRead>, int>> ItemList(ODataQueryOptions<CustomerRead> oDataQuery);
     }
 }

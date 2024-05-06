@@ -14,6 +14,7 @@ namespace Common
         public const string NullException = "Parameter {0} is null";
         public const string IsDuplicateCustomer = "{0} with Values {1} Exists";
         public const string NotFound = "{0} with {1} not Exists";
+        public const string EmptyResponse = "داده ای تعریف نشده است";
 
 
     }
