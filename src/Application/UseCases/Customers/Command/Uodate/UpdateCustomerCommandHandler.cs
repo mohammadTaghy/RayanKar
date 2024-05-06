@@ -31,11 +31,7 @@ namespace Application.UseCases.Customers.Command.Uodate
         {
             CheckRequestIsNull(request);
 
-            CustomerWrite? customer = _writeRepo.Find(request.Id);
-
-            CheckCustomerExist(request, customer);
-
-            customer = _mapper.Map<CustomerWrite>(request);
+            CustomerWrite customer = FillCustomerFromRequest(request);
 
             CheckCustomerIsDuplicate(customer);
 
@@ -48,14 +44,25 @@ namespace Application.UseCases.Customers.Command.Uodate
 
         }
 
-        private static void CheckRequestIsNull(UpdateCustomerCommand request)
+        private void CheckRequestIsNull(UpdateCustomerCommand request)
         {
             if (request == null) throw new ArgumentNullException(typeof(Customer).Name, string.Format(CommonMessage.NullException, nameof(Customer)));
         }
 
-        private static void CheckCustomerExist(UpdateCustomerCommand request, CustomerWrite? customer)
+        private CustomerWrite FillCustomerFromRequest(UpdateCustomerCommand request)
         {
+            CustomerWrite? customer = _writeRepo.Find(request.Id);
+
             if (customer == null) throw new ValidationException(String.Format(CommonMessage.NotFound, nameof(Customer), $"{nameof(Customer.Id)}={request.Id}"));
+
+            customer.DateOfBirth = request.DateOfBirth;
+            customer.Firstname = request.Firstname;
+            customer.LastName = request.LastName;
+            customer.PhoneNumber = new Domain.ValueObject.PhoneNumber(request.PhoneNumber);
+            customer.BankAccountNumber = new Domain.ValueObject.BankAccountNumber(request.BankAccountNumber);
+            customer.Email = request.Email;
+
+            return customer;
         }
         private void CheckCustomerIsDuplicate(CustomerWrite customer)
         {

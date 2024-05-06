@@ -10,6 +10,7 @@ namespace Common
     {
         public const string IsNotExist = "{0} not found";
         public const string InsertedSucceed = "{0} inserted Successful";
+        public const string DeletedSucceed = "{0} Deleted Successful";
         public const string NullException = "Parameter {0} is null";
         public const string IsDuplicateCustomer = "{0} with Values {1} Exists";
         public const string NotFound = "{0} with {1} not Exists";
