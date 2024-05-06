@@ -1,6 +1,7 @@
 ﻿using Application.Common;
 using Application.IRepositoryRead;
 using Common;
+using Domain.Entities;
 using Domain.ReadEntitis;
 using Microsoft.Extensions.Options;
 using Persistence.RepositoryRead.Base;
@@ -19,5 +20,6 @@ namespace Persistence.RepositoryRead
         {
         }
 
+        protected override string QueueName => nameof(Customer);
     }
 }

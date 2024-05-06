@@ -11,12 +11,12 @@ namespace Application.IRepositoryWrite.Base
 {
     public interface IRepositoryWriteBase<T> where T : class, IEntity
     {
-        Task Insert(CustomerWrite customer);
-        Task Update(CustomerWrite customer);
-        Task DeleteItem(CustomerWrite customer);
+        Task Insert(T entity);
+        Task Update(T entity);
+        Task DeleteItem(T entity);
 
-        CustomerWrite? Find(int id);
-        T? Find(Expression<Func<T, bool>> expression);
+        Task<T?> Find(int id);
+        Task<T?> Find(Expression<Func<T, bool>> expression);
 
     }
 }

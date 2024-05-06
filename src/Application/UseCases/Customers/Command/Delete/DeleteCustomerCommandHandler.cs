@@ -28,7 +28,7 @@ namespace Application.UseCases.Customers.Command.Delete
         {
             CheckRequestIsNull(request);
 
-            CustomerWrite customer = LoadCustomer(request);
+            CustomerWrite customer = await LoadCustomer(request);
 
             await _writeRepo.DeleteItem(customer);
 
@@ -41,9 +41,9 @@ namespace Application.UseCases.Customers.Command.Delete
         {
             if (request == null) throw new ArgumentNullException(typeof(Customer).Name, string.Format(CommonMessage.NullException, nameof(Customer)));
         }
-        private CustomerWrite LoadCustomer(DeleteCustomerCommand request)
+        private async Task<CustomerWrite> LoadCustomer(DeleteCustomerCommand request)
         {
-            CustomerWrite? customer= _writeRepo.Find(p => p.Id == request.Id || p.Email == request.Email);
+            CustomerWrite? customer= await _writeRepo.Find(p => p.Id == request.Id || p.Email == request.Email);
 
             if (customer == null) throw new ValidationException(String.Format(CommonMessage.NotFound, nameof(Customer), $"{nameof(Customer.Id)}={request.Id}"));
 

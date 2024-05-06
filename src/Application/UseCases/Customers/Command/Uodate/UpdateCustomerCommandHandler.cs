@@ -31,9 +31,9 @@ namespace Application.UseCases.Customers.Command.Uodate
         {
             CheckRequestIsNull(request);
 
-            CustomerWrite customer = FillCustomerFromRequest(request);
+            CustomerWrite customer = await FillCustomerFromRequest(request);
 
-            CheckCustomerIsDuplicate(customer);
+           await  CheckCustomerIsDuplicate(customer);
 
             CustomerRead CustomerRead = await UpdateCustomer(customer);
 
@@ -49,9 +49,9 @@ namespace Application.UseCases.Customers.Command.Uodate
             if (request == null) throw new ArgumentNullException(typeof(Customer).Name, string.Format(CommonMessage.NullException, nameof(Customer)));
         }
 
-        private CustomerWrite FillCustomerFromRequest(UpdateCustomerCommand request)
+        private async Task<CustomerWrite> FillCustomerFromRequest(UpdateCustomerCommand request)
         {
-            CustomerWrite? customer = _writeRepo.Find(request.Id);
+            CustomerWrite? customer = await _writeRepo.Find(request.Id);
 
             if (customer == null) throw new ValidationException(String.Format(CommonMessage.NotFound, nameof(Customer), $"{nameof(Customer.Id)}={request.Id}"));
 
@@ -64,9 +64,9 @@ namespace Application.UseCases.Customers.Command.Uodate
 
             return customer;
         }
-        private void CheckCustomerIsDuplicate(CustomerWrite customer)
+        private async Task CheckCustomerIsDuplicate(CustomerWrite customer)
         {
-            Tuple<bool, string> existUser = _writeRepo.IsExsists(customer);
+            Tuple<bool, string> existUser = await _writeRepo.IsExsists(customer);
             if (existUser.Item1)
                 throw new ValidationException(existUser.Item2);
         }

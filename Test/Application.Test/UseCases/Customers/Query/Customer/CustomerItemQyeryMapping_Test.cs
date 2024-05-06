@@ -27,12 +27,12 @@ namespace Application.Test.UseCases.Customers.Query
         {
             var entity = new CustomerRead(
                                         "Mohammad",
-                                        new Domain.ValueObject.PhoneNumber("+989384563280"),
                                         "taghy@gmail.com",
-                                        new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021"),
                                         "Yami",
                                         DateTime.Now.AddYears(-1),
-                                        1
+                                        1,
+                                        "+989384563280",
+                                        "IR830120010000001387998021"
                                     );
 
             var result = _mapper.Map<CustomerDto>(entity);

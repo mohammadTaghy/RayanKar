@@ -11,12 +11,15 @@ namespace Domain.ValueObject
 {
     public sealed class PhoneNumber : IEquatable<PhoneNumber>
     {
-        private readonly string _phoneNumber;
+        public readonly string Phone;
+        private PhoneNumber() : this("")
+        {
 
+        }
         public PhoneNumber(string number)
         {
             PhoneNumberType phoneNumberType = GetPhoneNumberType(number);
-            this._phoneNumber = phoneNumberType == PhoneNumberType.MOBILE || phoneNumberType == PhoneNumberType.FIXED_LINE || phoneNumberType == PhoneNumberType.FIXED_LINE_OR_MOBILE ?
+            this.Phone = phoneNumberType == PhoneNumberType.MOBILE || phoneNumberType == PhoneNumberType.FIXED_LINE || phoneNumberType == PhoneNumberType.FIXED_LINE_OR_MOBILE ?
                 number :
                 throw new ArgumentException("PhoneNumber is incorrect");
         }
@@ -34,11 +37,11 @@ namespace Domain.ValueObject
             if (other is null)
                 return false;
 
-            return _phoneNumber == other._phoneNumber;
+            return Phone == other.Phone;
         }
         public override string ToString()
         {
-            return _phoneNumber;
+            return Phone;
         }
     }
 }

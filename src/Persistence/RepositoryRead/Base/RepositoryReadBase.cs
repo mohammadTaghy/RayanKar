@@ -22,7 +22,7 @@ namespace Persistence.RepositoryRead.Base
     {
         #region Property
         private readonly IMongoDatabase _dB;
-
+        protected abstract string QueueName { get;}
         private IMongoCollection<T> collection { get; set; }
         private readonly MongoClient mongoClient;
         protected readonly IRabbitMQUtility _rabbitMQUtility;
@@ -41,9 +41,9 @@ namespace Persistence.RepositoryRead.Base
         protected virtual void SetReciveMessageEvent()
         {
             _rabbitMQUtility.RecieveMessage(new RabbitMQRecieveRequest(
-            
-                nameof(T),
-                nameof(T),
+
+                QueueName,
+                QueueName,
                 async (model, ea) =>
                 {
                     var body = ea.Body.ToArray();

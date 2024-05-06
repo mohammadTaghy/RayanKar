@@ -11,6 +11,6 @@ namespace Application.IRepositoryWrite
 {
     public interface ICustomerWriteRepository : IRepositoryWriteBase<CustomerWrite>
     {
-        Tuple<bool, string> IsExsists(CustomerWrite customer);
+        Task<Tuple<bool, string>> IsExsists(CustomerWrite customer);
     }
 }

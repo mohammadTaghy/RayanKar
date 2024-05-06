@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace Application.Test.UseCases.Customers.Command
 {
@@ -34,11 +35,11 @@ namespace Application.Test.UseCases.Customers.Command
             _mapper.Setup(p => p.Map<CustomerWrite>(It.IsAny<UpdateCustomerCommand>())).
                 Returns(new CustomerWrite(
                                 _customer.Firstname,
-                                new Domain.ValueObject.PhoneNumber(_customer.PhoneNumber),
                                 _customer.Email,
-                                new Domain.ValueObject.BankAccountNumber(_customer.BankAccountNumber),
                                  _customer.LastName,
-                                _customer.DateOfBirth
+                                _customer.DateOfBirth,
+                                new Domain.ValueObject.PhoneNumber(_customer.PhoneNumber),
+                                new Domain.ValueObject.BankAccountNumber(_customer.BankAccountNumber)
                             )
                 );
 
@@ -56,7 +57,7 @@ namespace Application.Test.UseCases.Customers.Command
         [Fact]
         public async Task UpdateCustomerCommandHandler_GivenIdNotExist_NotFoundException()
         {
-            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns<CustomerWrite>(null);
+            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(()=>Task.FromResult<CustomerWrite?>(null));
 
             await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -66,10 +67,10 @@ namespace Application.Test.UseCases.Customers.Command
         public async Task UpdateCustomerCommandHandler_GivenFirstNameLastNamePhoneNumberExist_ValidationException()
         {
             CustomerWrite customer = _mapper.Object.Map<CustomerWrite>(_customer);
-            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(customer);
+            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(Task.FromResult<CustomerWrite?>(customer));
             string message = String.Format(CommonMessage.IsDuplicateCustomer, nameof(Customer), $"{_customer.Firstname},{_customer.LastName},{_customer.DateOfBirth}");
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool,string>(true,message));
+                .Returns(Task.FromResult(new Tuple<bool,string>(true,message)));
 
              await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -79,10 +80,10 @@ namespace Application.Test.UseCases.Customers.Command
         public async Task UpdateCustomerCommandHandler_GivenEmailExist_ValidationException()
         {
             CustomerWrite customer = _mapper.Object.Map<CustomerWrite>(_customer);
-            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(customer);
+            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(Task.FromResult<CustomerWrite?>(customer));
             string message = String.Format(CommonMessage.IsDuplicateCustomer, nameof(Customer), $"{_customer.Email}");
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool, string>(true, message));
+                .Returns(Task.FromResult(new Tuple<bool, string>(true, message)));
 
             await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -93,9 +94,9 @@ namespace Application.Test.UseCases.Customers.Command
         public async Task UpdateCustomerCommandHandler_GivenCorrectValue_ResultOk()
         {
             CustomerWrite customer = _mapper.Object.Map<CustomerWrite>(_customer);
-            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(customer);
+            _writeRepoMock.Setup(p => p.Find(It.IsAny<int>())).Returns(Task.FromResult<CustomerWrite?>(customer));
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool, string>(false, string.Empty));
+                .Returns(Task.FromResult(new Tuple<bool, string>(false, string.Empty)));
 
             CommandResponse<CustomerRead> result = await _handler.Handle(_customer, CancellationToken.None);
 

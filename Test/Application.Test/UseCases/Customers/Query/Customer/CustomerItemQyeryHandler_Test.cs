@@ -48,12 +48,12 @@ namespace Application.Test.UseCases.Customers.Query
             _readRepoMock.Setup(p => p.FindOne(It.IsAny<int>())).Returns(
                 Task.FromResult<CustomerRead?>(new CustomerRead(
                                         "Mohammad",
-                                        new Domain.ValueObject.PhoneNumber("+989384563280"),
                                         "taghy@gmail.com",
-                                        new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021"),
                                         "Yami",
                                         DateTime.Now.AddYears(-1),
-                                        1
+                                        1,
+                                        "+989384563280",
+                                        "IR830120010000001387998021"
                                     )
                ));
             _mapper.Setup(p => p.Map<CustomerDto>(It.IsAny<CustomerRead>())).Returns(

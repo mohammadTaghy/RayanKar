@@ -37,12 +37,12 @@ namespace Persistence.Test.RepositoryRead
             new Mock<IRabbitMQUtility>().Object),
                 new CustomerRead(
                                         "MohammadTaghy",
-                                        new Domain.ValueObject.PhoneNumber("+989384563280"),
                                         "taghy@gmail.com",
-                                        new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021"),
                                         "Yami",
                                         DateTime.Now.AddYears(-1),
-                                        2
+                                        2,
+                                        "+989384563280",
+                                        "IR830120010000001387998021"
                                     )
             )
         {

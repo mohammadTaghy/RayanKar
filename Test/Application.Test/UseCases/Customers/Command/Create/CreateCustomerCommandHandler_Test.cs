@@ -27,11 +27,11 @@ namespace Application.Test.UseCases.Customers.Command
             _mapper.Setup(p => p.Map<CustomerWrite>(It.IsAny<CreateCustomerCommand>()))
                 .Returns(new CustomerWrite(
                                 _customer.Firstname,
-                                new Domain.ValueObject.PhoneNumber(_customer.PhoneNumber),
                                 _customer.Email,
-                                new Domain.ValueObject.BankAccountNumber(_customer.BankAccountNumber),
                                  _customer.LastName,
-                                _customer.DateOfBirth
+                                _customer.DateOfBirth,
+                                new Domain.ValueObject.PhoneNumber(_customer.PhoneNumber),
+                                new Domain.ValueObject.BankAccountNumber(_customer.BankAccountNumber)
                             )
                 );
 
@@ -50,7 +50,7 @@ namespace Application.Test.UseCases.Customers.Command
         {
             string message = String.Format(CommonMessage.IsDuplicateCustomer, nameof(Customer), $"{_customer.Firstname},{_customer.LastName},{_customer.DateOfBirth}");
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool,string>(true, message));
+                .Returns(Task.FromResult(new Tuple<bool,string>(true, message)));
 
             await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -61,7 +61,7 @@ namespace Application.Test.UseCases.Customers.Command
         {
             string message = String.Format(CommonMessage.IsDuplicateCustomer, nameof(Customer), $"{_customer.Email}");
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool, string>(true, message));
+                .Returns(Task.FromResult(new Tuple<bool, string>(true, message)));
 
             await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -73,7 +73,7 @@ namespace Application.Test.UseCases.Customers.Command
         {
             string message = "";
             _writeRepoMock.Setup(p => p.IsExsists(It.IsAny<CustomerWrite>()))
-                .Returns(new Tuple<bool, string>(false, message));
+                .Returns(Task.FromResult(new Tuple<bool, string>(false, message)));
 
             CommandResponse<int> result = await _handler.Handle(_customer, CancellationToken.None);
 

@@ -10,10 +10,14 @@ namespace Domain.ValueObject
 {
     public sealed class BankAccountNumber : IEquatable<BankAccountNumber>
     {
-        private readonly string _bankAccountNumber;
+        public readonly string BankAccount;
+        private BankAccountNumber() : this("")
+        {
+
+        }
         public BankAccountNumber(string number)
         {
-            _bankAccountNumber = Validation(number) ? 
+            BankAccount = Validation(number) ? 
                 number : 
                 throw new ArgumentException(DomainMessages.InValidBankAccountNumber);
         }
@@ -71,14 +75,14 @@ namespace Domain.ValueObject
 
         public override string ToString()
         {
-            return _bankAccountNumber;
+            return BankAccount;
         }
         public bool Equals(BankAccountNumber? other)
         {
             if (other is null)
                 return false;
 
-            return _bankAccountNumber == other._bankAccountNumber;
+            return BankAccount == other.BankAccount;
         }
         public override bool Equals(object? obj)
         {
@@ -87,7 +91,7 @@ namespace Domain.ValueObject
 
         public override int GetHashCode()
         {
-            return _bankAccountNumber.GetHashCode();
+            return BankAccount.GetHashCode();
         }
     }
 }

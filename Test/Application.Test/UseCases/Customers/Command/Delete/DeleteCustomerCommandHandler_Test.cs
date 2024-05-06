@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Domain.ValueObject;
 
 namespace Application.Test.UseCases.Customers.Command.Delete
 {
@@ -38,7 +39,7 @@ namespace Application.Test.UseCases.Customers.Command.Delete
         public async Task DeleteCustomerCommandHandler_GivenIdNotExist_NotFoundException()
         {
             _writeRepoMock.Setup(p => p.Find(It.IsAny<Expression<Func<CustomerWrite, bool>>>()))
-                .Returns<CustomerWrite>(null);
+                .Returns(() => Task.FromResult<CustomerWrite?>(null));
 
             var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(_customer, CancellationToken.None));
 
@@ -51,13 +52,15 @@ namespace Application.Test.UseCases.Customers.Command.Delete
         public async Task DeleteCustomerCommandHandler_GivenCorrectId_ResultAsTrue()
         {
             _writeRepoMock.Setup(p => p.Find(It.IsAny<Expression<Func<CustomerWrite, bool>>>()))
-                .Returns(new CustomerWrite(
-                "Mohammad",
-                new Domain.ValueObject.PhoneNumber("+989384563280"),
-                "taghy@gmail.com",
-                new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021"),
-                "Yami",
-                DateTime.Now.AddYears(-1)
+                .Returns(Task.FromResult<CustomerWrite?>(new CustomerWrite(
+                                        "Mohammad",
+                                        "taghy@gmail.com",
+                                        "Yami",
+                                        DateTime.Now.AddYears(-1),
+                                        new Domain.ValueObject.PhoneNumber("+989384563280"),
+                                        new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021")
+                                        )
+                
             ));
             _writeRepoMock.Setup(p => p.DeleteItem(It.IsAny<CustomerWrite>()))
                 .Returns(Task.FromResult<bool>(true));
