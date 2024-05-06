@@ -1,36 +1,66 @@
 
+using MediatR;
+using Microsoft.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+using System.Reflection;
+
 namespace API
 {
+
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            var host = CreateWebHostBuilder(args).Build();
+            var builder = new ConfigurationBuilder();
+            using (var scope = host.Services.CreateScope())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var dbContext = services.GetRequiredService<PersistanceDBContext>();
+                    dbContext.Database.Migrate();
+
+
+                    var mediator = services.GetRequiredService<IMediator>();
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating or initializing the database.");
+                }
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
+            host.Run();
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+                    if (env.IsDevelopment())
+                    {
+                        var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
+                        if (appAssembly != null)
+                        {
+                            config.AddUserSecrets(appAssembly, optional: true);
+                        }
+                    }
+
+                    config.AddEnvironmentVariables();
+
+                    if (args != null)
+                    {
+                        config.AddCommandLine(args);
+                    }
+                })
+                .UseStartup<Startup>();
     }
 }

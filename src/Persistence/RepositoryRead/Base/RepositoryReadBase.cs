@@ -54,13 +54,13 @@ namespace Persistence.RepositoryRead.Base
                         T entity = JsonConvert.DeserializeObject<T>(rabbitMQMessageModel.Body);
                         switch (rabbitMQMessageModel.ChangedType)
                         {
-                            case (byte)Constants.ChangedType.Create:
+                            case (byte)Microsoft.EntityFrameworkCore.EntityState.Added:
                                 await this.Add(entity, CancellationToken.None);
                                 break;
-                            case (byte)Constants.ChangedType.Update:
+                            case (byte)Microsoft.EntityFrameworkCore.EntityState.Modified:
                                 await this.Update(entity, CancellationToken.None);
                                 break;
-                            case (byte)Constants.ChangedType.Delete:
+                            case (byte)Microsoft.EntityFrameworkCore.EntityState.Deleted:
                                 await this.Delete(entity, CancellationToken.None);
                                 break;
                             default:

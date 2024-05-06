@@ -18,10 +18,10 @@ namespace Application.UseCases.Customers.Query
     {
         
         public int TotalCount { get; set; }
-        public T Result { get; set; }
+        public T? Result { get; set; }
         public string Message { get; set; }
         public bool IsSuccess { get; set; }
-        public QueryResponse(T result, int totalCount, bool isSuccess, string message)
+        public QueryResponse(T? result, int totalCount, bool isSuccess, string message)
         {
             Result = result;
             TotalCount = totalCount;

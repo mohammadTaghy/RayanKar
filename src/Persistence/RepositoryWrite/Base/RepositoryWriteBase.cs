@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Application.Common;
+using Newtonsoft.Json;
 
 namespace Persistence.RepositoryWrite.Base
 {
@@ -15,10 +17,13 @@ namespace Persistence.RepositoryWrite.Base
     {
 
         private readonly PersistanceDBContext Context;
+        protected readonly IRabbitMQUtility rabbitMQUtility;
+
         protected abstract string QueueName { get; }
-        protected RepositoryWriteBase(PersistanceDBContext context)
+        protected RepositoryWriteBase(PersistanceDBContext context, IRabbitMQUtility rabbitMQUtility)
         {
             Context = context;
+            this.rabbitMQUtility = rabbitMQUtility;
         }
 
         protected IQueryable<T> GetAllAsQueryable()
@@ -48,12 +53,25 @@ namespace Persistence.RepositoryWrite.Base
         public async Task Save()
         {
             var entities = Context.ChangeTracker.Entries().Where(p => p.State != EntityState.Unchanged);
+            T? aggregateEntity = null;
+            byte changedtype = 0;
             foreach (var entity in entities)
             {
                 FillEntityProperty(entity);
+                aggregateEntity = entity.Entity as T;
+                changedtype = (byte)entity.State;
             }
             await Context.SaveChangesAsync(CancellationToken.None);
-
+            SendMessage(aggregateEntity, changedtype);
+        }
+        protected virtual void SendMessage(T? aggregateEntity, byte changedtype)
+        {
+            rabbitMQUtility.SendMessage(
+                new Application.Model.RabbitMQSendRequest(
+                    QueueName,
+                    QueueName,
+                    JsonConvert.SerializeObject(aggregateEntity)
+                    ));
         }
         private void FillEntityProperty(EntityEntry entity)
         {

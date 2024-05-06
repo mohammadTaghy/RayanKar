@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="MediatR.Extensions" Version="0.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.4" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>

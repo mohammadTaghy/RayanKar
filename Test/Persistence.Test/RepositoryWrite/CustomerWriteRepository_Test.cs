@@ -1,4 +1,5 @@
-﻿using Domain.WriteEntities;
+﻿using Application.Common;
+using Domain.WriteEntities;
 using Moq;
 using Persistence.RepositoryWrite;
 using Persistence.Test.RepositoryWrite.Base;
@@ -13,7 +14,7 @@ namespace Persistence.Test.RepositoryWrite
     public class CustomerWriteRepository_Test : RepositoryWriteBase_Test<CustomerWrite, CustomerWriteRepository>, IDisposable
     {
         public CustomerWriteRepository_Test() :
-            base(new CustomerWriteRepository(_DbContext),
+            base(new CustomerWriteRepository(_DbContext, new Mock<IRabbitMQUtility>().Object),
                 new CustomerWrite(
                                         "Mohammad",
                                         "taghy@gmail.com",
