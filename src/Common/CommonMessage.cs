@@ -15,7 +15,8 @@ namespace Common
         public const string IsDuplicateCustomer = "{0} with Values {1} Exists";
         public const string NotFound = "{0} with {1} not Exists";
         public const string EmptyResponse = "داده ای تعریف نشده است";
-
+        public const string InValidPhonNumber = "PhoneNumber is incorrect";
+        public const string InValidBankAccountNumber = "BankAccountNumber is incorrect";
 
     }
 }

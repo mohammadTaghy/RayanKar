@@ -11,9 +11,8 @@ namespace Domain.WriteEntities
 {
     public class CustomerWrite : Customer
     {
-        public PhoneNumber PhoneNumber { get; set; }
-        public BankAccountNumber BankAccountNumber { get; set; }
-        public CustomerWrite():this("","","",DateTime.Now, null, null)
+       
+        public CustomerWrite():this(string.Empty, string.Empty, string.Empty, DateTime.Now, string.Empty, string.Empty)
         {
             
         }
@@ -22,13 +21,12 @@ namespace Domain.WriteEntities
            string email,
            string lastName,
            DateTime dateOfBirth,
-           PhoneNumber phoneNumber,
-           BankAccountNumber bankAccountNumber
+           string phoneNumber,
+           string bankAccountNumber
            ) :
-           base(firstname,  email, lastName, dateOfBirth)
+           base(firstname,  email, lastName, dateOfBirth, phoneNumber, bankAccountNumber)
         {
-            this.PhoneNumber = phoneNumber;
-            this.BankAccountNumber = bankAccountNumber;
+            
         }
     }
 }

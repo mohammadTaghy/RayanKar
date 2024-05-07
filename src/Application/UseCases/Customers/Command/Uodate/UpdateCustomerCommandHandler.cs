@@ -1,8 +1,10 @@
 ﻿using Application.IRepositoryWrite;
+using Application.UseCases.Customers.Command.Create;
 using AutoMapper;
 using Common;
 using Domain.Entities;
 using Domain.ReadEntitis;
+using Domain.ValueObject;
 using Domain.WriteEntities;
 using Microsoft.VisualBasic;
 using System;
@@ -51,6 +53,7 @@ namespace Application.UseCases.Customers.Command.Uodate
 
         private async Task<CustomerWrite> FillCustomerFromRequest(UpdateCustomerCommand request)
         {
+            ValidateRequest(request);
             CustomerWrite? customer = await _writeRepo.Find(request.Id);
 
             if (customer == null) throw new ValidationException(String.Format(CommonMessage.NotFound, nameof(Customer), $"{nameof(Customer.Id)}={request.Id}"));
@@ -58,11 +61,22 @@ namespace Application.UseCases.Customers.Command.Uodate
             customer.DateOfBirth = request.DateOfBirth;
             customer.Firstname = request.Firstname;
             customer.LastName = request.LastName;
-            customer.PhoneNumber = new Domain.ValueObject.PhoneNumber(request.PhoneNumber);
-            customer.BankAccountNumber = new Domain.ValueObject.BankAccountNumber(request.BankAccountNumber);
+            customer.PhoneNumber = request.PhoneNumber;
+            customer.BankAccountNumber = request.BankAccountNumber;
             customer.Email = request.Email;
 
             return customer;
+        }
+        private void ValidateRequest(UpdateCustomerCommand request)
+        {
+            if (!PhoneNumber.Validate(request.PhoneNumber))
+            {
+                throw new ArgumentException(CommonMessage.InValidPhonNumber);
+            }
+            if (!BankAccountNumber.Validate(request.BankAccountNumber))
+            {
+                throw new ArgumentException(CommonMessage.InValidBankAccountNumber);
+            }
         }
         private async Task CheckCustomerIsDuplicate(CustomerWrite customer)
         {

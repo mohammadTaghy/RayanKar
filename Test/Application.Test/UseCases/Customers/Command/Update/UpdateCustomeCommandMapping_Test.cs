@@ -21,36 +21,6 @@ namespace Application.Test.UseCases.Customers.Command.Update
         }
 
         [Fact]
-        public void ShouldMap_CreateCustomerCommand_CustomerErite_BankAccountValidation()
-        {
-            var entity = new UpdateCustomerCommand(
-                "Mohammad",
-                "Yami",
-                DateTime.Now.AddYears(-1),
-                "+989384563280",
-                "taghy@gmail.com",
-                "6274121191332725",
-                1
-            );
-
-            Assert.Throws<AutoMapperMappingException>(() => _mapper.Map<CustomerWrite>(entity));
-        }
-        [Fact]
-        public void ShouldMap_CreateCustomerCommand_CustomerErite_PhoneNumberValidation()
-        {
-            var entity = new UpdateCustomerCommand(
-                "Mohammad",
-                "Yami",
-                DateTime.Now.AddYears(-1),
-                "+9893845632802",
-                "taghy@gmail.com",
-                "IR830120010000001387998021",
-                1
-            );
-
-            Assert.Throws<AutoMapperMappingException>(() => _mapper.Map<CustomerWrite>(entity));
-        }
-        [Fact]
         public void ShouldMap_CreateCustomerCommand_CustomerErite()
         {
             var entity = new UpdateCustomerCommand(

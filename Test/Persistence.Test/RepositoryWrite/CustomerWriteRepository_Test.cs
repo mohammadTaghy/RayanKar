@@ -20,8 +20,8 @@ namespace Persistence.Test.RepositoryWrite
                                         "taghy@gmail.com",
                                         "Yami",
                                         DateTime.Now.AddYears(-1),
-                                        new Domain.ValueObject.PhoneNumber("+989384563280"),
-                                        new Domain.ValueObject.BankAccountNumber("IR830120010000001387998021")
+                                        "+989384563280",
+                                        "IR830120010000001387998021"
                                     )
                                    
                 )

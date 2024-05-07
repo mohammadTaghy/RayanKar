@@ -17,43 +17,22 @@ namespace Domain.Test
         {
             string number = "+9893845632801";
 
-            var result = Assert.Throws<ArgumentException>(() => new PhoneNumber(number));
+            bool result = PhoneNumber.Validate(number);
 
-            Assert.Equal(DomainMessages.InValidPhonNumber, result.Message);
+            Assert.False(result);
         }
         [Fact]
         public void PhoneNumber_ValidationSuccess_Test()
         {
             string _mobileNumber = "+989384563280";
-            string _phoneNumber = "+989384563280";
+            string _phoneNumber = "+982133367289";
 
-            PhoneNumber mobileNumber = new PhoneNumber(_mobileNumber);
-            PhoneNumber phoneNumber = new PhoneNumber(_phoneNumber);
+            bool mobileNumberValid = PhoneNumber.Validate(_mobileNumber);
+            bool phoneNumberValid = PhoneNumber.Validate(_phoneNumber);
 
-            Assert.Equal(_phoneNumber, phoneNumber.ToString());
-            Assert.Equal(_mobileNumber, mobileNumber.ToString());
+            Assert.True(mobileNumberValid);
+            Assert.True(phoneNumberValid);
         }
         
-        [Theory]
-        [InlineData("+989384563280", "+989384563280", true)]
-        [InlineData("+982133367289", "+982133367288", false)]
-        public void PhoneNumber_Equal_Test(string number1, string number2, bool expected)
-        {
-
-            PhoneNumber phoneNumber1 = new PhoneNumber(number1);
-            PhoneNumber phoneNumber2 = new PhoneNumber(number2);
-
-            Assert.Equal(expected, phoneNumber1.Equals(phoneNumber2));
-
-        }
-        [Fact]
-        public void PhoneNumber_ToString_Test()
-        {
-            string number = "+982133367289";
-
-            PhoneNumber phoneNumber1 = new PhoneNumber(number);
-
-            Assert.Equal(number, phoneNumber1.ToString());
-        }
     }
 }

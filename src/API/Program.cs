@@ -13,18 +13,13 @@ namespace API
         public static async Task Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            var builder = new ConfigurationBuilder();
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
 
                 try
                 {
-                    var dbContext = services.GetRequiredService<PersistanceDBContext>();
-                    dbContext.Database.Migrate();
-
-
-                    var mediator = services.GetRequiredService<IMediator>();
+                     services.GetRequiredService<IMediator>();
                 }
                 catch (Exception ex)
                 {

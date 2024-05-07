@@ -14,13 +14,22 @@ namespace Domain.Entities
         public string Firstname { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-       
-        protected Customer(string firstname, string email, string lastName, DateTime dateOfBirth)
+        public string PhoneNumber { get; set; }
+        public string BankAccountNumber { get; set; }
+        protected Customer(
+            string firstname, 
+            string email, 
+            string lastName, 
+            DateTime dateOfBirth,
+           string phoneNumber,
+           string bankAccountNumber)
         {
             Firstname = firstname;
             Email = email;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
+            this.PhoneNumber = phoneNumber;
+            this.BankAccountNumber = bankAccountNumber;
         }
        
     }

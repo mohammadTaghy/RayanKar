@@ -32,12 +32,8 @@ namespace Application.UseCases.Customers.Command.Uodate
         }
         public void Mapping(MappingProfile profile)
         {
-            profile.CreateMap<UpdateCustomerCommand, CustomerWrite>()
-                .ForMember(p => p.PhoneNumber, q => q.MapFrom(s => new Domain.ValueObject.PhoneNumber(s.PhoneNumber)))
-                .ForMember(p => p.BankAccountNumber, q => q.MapFrom(s => new Domain.ValueObject.BankAccountNumber(s.BankAccountNumber)));
-            profile.CreateMap<CustomerWrite, CustomerRead>()
-                .ForMember(p => p.PhoneNumber, q => q.MapFrom(s => s.PhoneNumber.ToString()))
-                .ForMember(p => p.BankAccountNumber, q => q.MapFrom(s => s.BankAccountNumber.ToString()));
+            profile.CreateMap<UpdateCustomerCommand, CustomerWrite>();
+            profile.CreateMap<CustomerWrite, CustomerRead>();
         }
     }
 }

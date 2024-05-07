@@ -8,7 +8,6 @@ namespace Domain
 {
     public static class DomainMessages
     {
-        public const string InValidPhonNumber = "PhoneNumber is incorrect";
-        public const string InValidBankAccountNumber = "BankAccountNumber is incorrect";
+        
     }
 }

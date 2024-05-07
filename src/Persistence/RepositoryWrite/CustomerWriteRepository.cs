@@ -44,8 +44,8 @@ namespace Persistence.RepositoryWrite
                                 aggregateEntity.LastName,
                                 aggregateEntity.DateOfBirth,
                                 aggregateEntity.Id,
-                                aggregateEntity.PhoneNumber?.ToString(),
-                                aggregateEntity.BankAccountNumber?.ToString())),
+                                aggregateEntity.PhoneNumber,
+                                aggregateEntity.BankAccountNumber)),
                         aggregateEntity.Id,
                         changedtype)
                         )

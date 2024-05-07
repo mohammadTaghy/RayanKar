@@ -19,7 +19,7 @@ namespace Persistence
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("case_insensitive_collation");
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistanceDBContext).Assembly);
 
 

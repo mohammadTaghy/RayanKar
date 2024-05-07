@@ -30,11 +30,29 @@ namespace Application.Test.UseCases.Customers.Command
                                 _customer.Email,
                                  _customer.LastName,
                                 _customer.DateOfBirth,
-                                new Domain.ValueObject.PhoneNumber(_customer.PhoneNumber),
-                                new Domain.ValueObject.BankAccountNumber(_customer.BankAccountNumber)
+                                _customer.PhoneNumber,
+                                _customer.BankAccountNumber
                             )
                 );
 
+        }
+        [Fact]
+        public void CreateCustomerCommandHandler_GivenWrongPhoneNumber_ShouldArgumentNullException()
+        {
+            _customer.PhoneNumber = "+980938456321";
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+
+            _writeRepoMock.Verify(p => p.Insert(It.IsAny<CustomerWrite>()), Times.Never);
+        }
+        [Fact]
+        public void CreateCustomerCommandHandler_GivenWrongAccountNumber_ShouldArgumentNullException()
+        {
+            _customer.BankAccountNumber = "IR8301200100";
+
+            Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+
+            _writeRepoMock.Verify(p => p.Insert(It.IsAny<CustomerWrite>()), Times.Never);
         }
         [Fact]
         public void CreateCustomerCommandHandler_GivenNullRequest_ShouldArgumentNullException()

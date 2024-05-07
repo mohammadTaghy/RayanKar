@@ -10,22 +10,19 @@ namespace Domain.ReadEntitis
 {
     public class CustomerRead : Customer
     {
-        public string PhoneNumber { get; set; }
-        public string BankAccountNumber { get; set; }
-
+        
         public CustomerRead(
-            string firstname,
+           string firstname,
            string email,
            string lastName,
            DateTime dateOfBirth,
            int id,
            string phoneNumber,
-           string bankAccountNumber) :
-           base(firstname, email, lastName, dateOfBirth)
+           string bankAccountNumber
+           ) :
+           base(firstname, email, lastName, dateOfBirth, phoneNumber, bankAccountNumber)
         {
             this.Id = id;
-            PhoneNumber = phoneNumber;
-            BankAccountNumber = bankAccountNumber;
         }
     }
 }

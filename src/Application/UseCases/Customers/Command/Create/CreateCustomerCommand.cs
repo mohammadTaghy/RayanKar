@@ -30,9 +30,7 @@ namespace Application.UseCases.Customers.Command.Create
         public void Mapping(MappingProfile profile)
         {
             profile.CreateMap<CreateCustomerCommand, CustomerWrite>()
-                .ForMember(p => p.Id, q => q.MapFrom(s => int.MinValue))
-                .ForMember(p => p.PhoneNumber, q => q.MapFrom(s => new Domain.ValueObject.PhoneNumber(s.PhoneNumber)))
-                .ForMember(p => p.BankAccountNumber, q => q.MapFrom(s => new Domain.ValueObject.BankAccountNumber(s.BankAccountNumber)));
+                .ForMember(p => p.Id, q => q.MapFrom(s => int.MinValue));
         }
 
     }

@@ -8,20 +8,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain.ValueObject
 {
-    public sealed class BankAccountNumber : IEquatable<BankAccountNumber>
+    public sealed class BankAccountNumber 
     {
-        public readonly string BankAccount;
-        private BankAccountNumber() : this("")
-        {
-
-        }
-        public BankAccountNumber(string number)
-        {
-            BankAccount = Validation(number) ? 
-                number : 
-                throw new ArgumentException(DomainMessages.InValidBankAccountNumber);
-        }
-        public bool Validation(string number)
+        public static bool Validate(string number)
         {
             number = number.ToUpper(); //IN ORDER TO COPE WITH THE REGEX BELOW
             if (string.IsNullOrEmpty(number))
@@ -35,7 +24,7 @@ namespace Domain.ValueObject
                 return false;
             }
         }
-        private bool CheckNumberIsValid(string number)
+        private static bool CheckNumberIsValid(string number)
         {
             if (System.Text.RegularExpressions.Regex.IsMatch(number, "^[A-Z0-9]"))
             {
@@ -48,7 +37,7 @@ namespace Domain.ValueObject
             }
             return false;
         }
-        private string SumBankAccountNumber(string bank, int asciiShift)
+        private static string SumBankAccountNumber(string bank, int asciiShift)
         {
             StringBuilder sb = new();
             foreach (char c in bank)
@@ -60,7 +49,7 @@ namespace Domain.ValueObject
             }
             return sb.ToString();
         }
-        private bool CheckSum(string checkSumString)
+        private static bool CheckSum(string checkSumString)
         {
             int checksum = int.Parse(checkSumString.Substring(0, 1));
             for (int i = 1; i < checkSumString.Length; i++)
@@ -73,25 +62,5 @@ namespace Domain.ValueObject
             return checksum == 1;
         }
 
-        public override string ToString()
-        {
-            return BankAccount;
-        }
-        public bool Equals(BankAccountNumber? other)
-        {
-            if (other is null)
-                return false;
-
-            return BankAccount == other.BankAccount;
-        }
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as BankAccountNumber);
-        }
-
-        public override int GetHashCode()
-        {
-            return BankAccount.GetHashCode();
-        }
     }
 }

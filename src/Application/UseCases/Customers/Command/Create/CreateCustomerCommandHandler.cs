@@ -3,6 +3,7 @@ using AutoMapper;
 using Common;
 using Domain.Entities;
 using Domain.ReadEntitis;
+using Domain.ValueObject;
 using Domain.WriteEntities;
 using Microsoft.VisualBasic;
 using System;
@@ -25,6 +26,7 @@ namespace Application.UseCases.Customers.Command.Create
             CancellationToken cancellationToken)
         {
             CheckIfNull(request);
+            ValidateRequest(request);
             CustomerWrite customer = await InsertCustomer(request);
 
             return new CommandResponse<int>(
@@ -32,6 +34,7 @@ namespace Application.UseCases.Customers.Command.Create
                 string.Format(CommonMessage.InsertedSucceed, nameof(CustomerWrite)),
                  customer.Id);
         }
+
         private void CheckIfNull(CreateCustomerCommand request)
         {
             if (request is null)
@@ -39,6 +42,18 @@ namespace Application.UseCases.Customers.Command.Create
                 throw new ArgumentNullException(typeof(Customer).Name, string.Format(CommonMessage.NullException, nameof(Customer)));
             }
         }
+        private void ValidateRequest(CreateCustomerCommand request)
+        {
+            if(!PhoneNumber.Validate(request.PhoneNumber))
+            {
+                throw new ArgumentException(CommonMessage.InValidPhonNumber);
+            }
+            if (!BankAccountNumber.Validate(request.BankAccountNumber))
+            {
+                throw new ArgumentException(CommonMessage.InValidBankAccountNumber);
+            }
+        }
+
         private async Task<CustomerWrite> InsertCustomer(CreateCustomerCommand request)
         {
             CustomerWrite customer = _mapper.Map<CustomerWrite>(request);
