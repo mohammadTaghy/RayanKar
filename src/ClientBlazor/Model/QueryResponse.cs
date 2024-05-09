@@ -1,12 +1,4 @@
-﻿using Common;
-using SharedProject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.UseCases.Customers.Query
+﻿namespace ClientBlazor.Model
 {
     public interface IQueryResponse<T> where T : class, new()
     {
@@ -17,7 +9,7 @@ namespace Application.UseCases.Customers.Query
     }
     public sealed class QueryResponse<T> : IQueryResponse<T> where T : class, new()
     {
-        
+
         public int TotalCount { get; set; }
         public T? Result { get; set; }
         public string Message { get; set; }
@@ -27,7 +19,7 @@ namespace Application.UseCases.Customers.Query
             Result = result;
             TotalCount = totalCount;
             IsSuccess = isSuccess;
-            Message = totalCount == 0 && string.IsNullOrEmpty(message)? CommonMessage.EmptyResponse: message;
+            Message =  message;
         }
 
     }

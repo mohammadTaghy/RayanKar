@@ -8,6 +8,7 @@ using Domain.WriteEntities;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Persistence.RepositoryWrite.Base;
+using SharedProject;
 using System.Linq;
 
 namespace Persistence.RepositoryWrite

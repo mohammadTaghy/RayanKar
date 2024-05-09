@@ -1,13 +1,6 @@
-﻿using Domain.ValueObject;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using SharedProject.Validation;
 
-namespace Domain.Test
+namespace SharedProject.Test
 {
     public class BankAccountNumber_Test
     {

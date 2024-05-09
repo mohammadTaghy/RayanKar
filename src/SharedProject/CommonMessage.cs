@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace SharedProject
 {
     public static class CommonMessage
     {
@@ -18,5 +18,7 @@ namespace Common
         public const string InValidPhonNumber = "PhoneNumber is incorrect";
         public const string InValidBankAccountNumber = "BankAccountNumber is incorrect";
 
+        public const string InValidEmail = "Email is invalid";
+        public const string CannotBeNullOrLessThan = "{0} can not be empty or less than {1}";
     }
 }

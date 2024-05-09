@@ -1,0 +1,113 @@
+﻿@page "/customer"
+@using ClientBlazor.Model;
+@using System.Collections;
+@using ClientBlazor.Service;
+@using SharedProject.Customer;
+@inject ICustomerService customerService;
+
+
+@if (state == ViewState.List || state == ViewState.EmtyList)
+{
+    <div>
+        <div class="row">
+            <button class="btn btn-primary col-2" @onclick=@(() =>InsertCustomer())>New</button>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">FullName</th>
+                    <th scope="col">BirtDate</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">PhoneNumber</th>
+                    <th scope="col">BankAccountNumber</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (state == ViewState.List && customerList.Any())
+                {
+                    @foreach (CustomerDto customer in customerList)
+                    {
+                        <tr>
+                            <td scope="row">Id</td>
+                            <td>@customer.Firstname @customer.LastName</td>
+                            <td>@customer.DateOfBirth.Date</td>
+                            <td>@customer.Email</td>
+                            <td>@customer.PhoneNumber</td>
+                            <td>@customer.BankAccountNumber</td>
+                            <td><button @onclick=@(()=>EditCustomer(customer)) class="btn btn-primary">Edit</button></td>
+                            <td><button @onclick=@(()=>DeleteCustomer(customer)) class="btn btn-danger">Delete</button></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">
+                            do not exist data yet
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+}
+@if (state == ViewState.Edit || state == ViewState.Insert)
+{
+    <div class="row">
+        <button class="btn btn-primary" @onclick=@(()=>SendRequest())>Save</button>
+        <button class="btn btn-secondary" @onclick=@(()=>BackToList())>Cancel</button>
+    </div>
+    <div class="row p-2">
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="FirstName" @bind-value="@currentCustomer.Firstname"
+                   aria-label="FirstName" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="LastName" @bind-value="@currentCustomer.LastName"
+                   aria-label="LastName" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <input type="date" class="form-control" placeholder="DateOfBirth" @bind-value="@currentCustomer.DateOfBirth"
+                   aria-label="DateOfBirth" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text" id="basic-addon1">@@</span>
+            <input type="text" class="form-control" placeholder="Email" @bind-value="@currentCustomer.Email"
+                   aria-label="Email" aria-describedby="basic-addon1" />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="PhoneNumber" @bind-value="@currentCustomer.PhoneNumber"
+                   aria-label="PhoneNumber" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="BankAccountNumber" @bind-value="@currentCustomer.BankAccountNumber"
+                   aria-label="BankAccountNumber" aria-describedby="inputGroup-sizing-sm" />
+        </div>
+    </div>
+
+}
+@if (state == ViewState.Delete)
+{
+    <div class="row">
+        Are you sure?
+    </div>
+    <div class="row">
+        <button class="col-2" @onclick=@(()=>SendRequest())>Yes</button>
+        <button class="col-2" @onclick=@(()=>BackToList())>No</button>
+    </div>
+}
+
+@foreach (var message in messageList)
+{
+    <div class="row">
+        <button type="button" 
+            @onclick=@(()=>Remove(message.Key))
+            class="btn-close" aria-label="Close"></button>
+        <p class="text-warning">@message.Value</p>
+    </div>
+}

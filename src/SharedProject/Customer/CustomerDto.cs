@@ -1,28 +1,32 @@
-﻿using Domain.EntitiesBaseClass;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace SharedProject.Customer
 {
-    public abstract class Customer : AggregateRoot
+    public class CustomerDto
     {
+        public int Id { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Firstname { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string BankAccountNumber { get; set; }
-        protected Customer(
-            string firstname, 
-            string email, 
-            string lastName, 
-            DateTime dateOfBirth,
-           string phoneNumber,
-           string bankAccountNumber)
+        public CustomerDto(
+            int id,
+           string firstname,
+           string lastName,
+           DateTime dateOfBirth,
+           string email,
+
+          string phoneNumber,
+          string bankAccountNumber)
         {
+            Id = id;
             Firstname = firstname;
             Email = email;
             LastName = lastName;
@@ -30,6 +34,11 @@ namespace Domain.Entities
             this.PhoneNumber = phoneNumber;
             this.BankAccountNumber = bankAccountNumber;
         }
-       
+
+        public static CustomerDto EmptyInstance()
+        {
+            return new CustomerDto(0, "", "", DateTime.Now, "", "", "");
+        }
     }
+
 }

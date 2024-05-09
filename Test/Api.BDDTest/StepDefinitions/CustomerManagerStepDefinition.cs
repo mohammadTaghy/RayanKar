@@ -5,6 +5,7 @@ using Application.UseCases.Customers.Command.Create;
 using Application.UseCases.Customers.Command.Uodate;
 using Application.UseCases.Customers.Query;
 using Newtonsoft.Json;
+using SharedProject.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +93,10 @@ namespace Api.BDDTest.StepDefinitions
 
             string url=
                 $"{_client.BaseAddress}api/Customer/customers?api-version=1&$top=10&$skip=0" +
-                $"&$filter={nameof(CreateCustomerCommand.Firstname)} eq '{createCustomerCommand.Firstname}'  ";
+                $"&$filter={nameof(CreateCustomerCommand.Firstname)} eq '{createCustomerCommand.Firstname}'  and " +
+                $" {nameof(CreateCustomerCommand.LastName)} eq '{createCustomerCommand.LastName}'  and " +
+                $"{nameof(CreateCustomerCommand.BankAccountNumber)} eq '{createCustomerCommand.BankAccountNumber}'  and " +
+                $"{nameof(CreateCustomerCommand.Email)} eq '{createCustomerCommand.Email}'";
             HttpResponseMessage responseGet = await _client.GetAsync(url);
             QueryResponse<List<CustomerDto>>? queryResponse =
                 JsonConvert.DeserializeObject<QueryResponse<List<CustomerDto>>>(

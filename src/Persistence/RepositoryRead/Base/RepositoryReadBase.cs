@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Microsoft.AspNetCore.OData.Query;
+using SharedProject;
 
 namespace Persistence.RepositoryRead.Base
 {

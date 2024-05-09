@@ -6,6 +6,7 @@ using Domain.WriteEntities;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Application.IRepositoryWrite;
+using SharedProject;
 
 namespace Application.Test.UseCases.Customers.Command
 {

@@ -2,6 +2,7 @@
 using Domain.ReadEntitis;
 using MediatR;
 using Microsoft.AspNetCore.OData.Query;
+using SharedProject.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

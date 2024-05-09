@@ -1,6 +1,7 @@
 ﻿using Application.Mapping;
 using Domain.ReadEntitis;
 using MediatR;
+using SharedProject.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;

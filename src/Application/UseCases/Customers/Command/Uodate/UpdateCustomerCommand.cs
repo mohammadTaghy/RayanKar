@@ -29,6 +29,7 @@ namespace Application.UseCases.Customers.Command.Uodate
             base(firstname, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber)
         {
             Id = id;
+            
         }
         public void Mapping(MappingProfile profile)
         {

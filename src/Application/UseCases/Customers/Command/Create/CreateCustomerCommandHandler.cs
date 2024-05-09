@@ -1,18 +1,11 @@
 ﻿using Application.IRepositoryWrite;
 using AutoMapper;
-using Common;
 using Domain.Entities;
-using Domain.ReadEntitis;
-using Domain.ValueObject;
 using Domain.WriteEntities;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
+using SharedProject;
+using SharedProject.Customer;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.Customers.Command.Create
 {
@@ -44,13 +37,10 @@ namespace Application.UseCases.Customers.Command.Create
         }
         private void ValidateRequest(CreateCustomerCommand request)
         {
-            if(!PhoneNumber.Validate(request.PhoneNumber))
+            request.FillCustomerDto();
+            if (!CustomerValidate.CommonValidate(request.CustomerDto, out string validateMessage))
             {
-                throw new ArgumentException(CommonMessage.InValidPhonNumber);
-            }
-            if (!BankAccountNumber.Validate(request.BankAccountNumber))
-            {
-                throw new ArgumentException(CommonMessage.InValidBankAccountNumber);
+                throw new ValidationException(validateMessage);
             }
         }
 

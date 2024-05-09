@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharedProject.Customer;
+using SharedProject.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,9 +19,15 @@ namespace Application.UseCases.Customers.Command
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid pattern.")]
         public string Email { get; set; }
         public string BankAccountNumber { get; set; }
-
+        public CustomerDto CustomerDto { get; set; }    
        
-        protected BaseCustomerCommand(string firstname, string lastName, DateTime dateOfBirth, string phoneNumber, string email, string bankAccountNumber)
+        protected BaseCustomerCommand(
+            string firstname, 
+            string lastName, 
+            DateTime dateOfBirth, 
+            string phoneNumber, 
+            string email, 
+            string bankAccountNumber)
         {
             Firstname = firstname;
             LastName = lastName;
@@ -27,6 +35,12 @@ namespace Application.UseCases.Customers.Command
             PhoneNumber = phoneNumber;
             Email = email;
             BankAccountNumber = bankAccountNumber;
+            CustomerDto = new CustomerDto(0, firstname, lastName, dateOfBirth, email, phoneNumber, bankAccountNumber);
+        }
+        public void FillCustomerDto()
+        {
+            CustomerDto = new CustomerDto(0, Firstname, LastName, DateOfBirth, Email, PhoneNumber, BankAccountNumber);
+
         }
     }
 }

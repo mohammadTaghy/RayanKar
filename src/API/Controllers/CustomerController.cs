@@ -9,6 +9,7 @@ using Domain.ReadEntitis;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using SharedProject.Customer;
 
 namespace API.Controllers
 {

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OData.UriParser;
+using SharedProject.Customer;
 using System.Linq.Expressions;
 using System.Net.Http;
 

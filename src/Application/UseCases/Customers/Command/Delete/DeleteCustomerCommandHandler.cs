@@ -6,6 +6,7 @@ using Domain.Entities;
 using Domain.ReadEntitis;
 using Domain.WriteEntities;
 using Microsoft.VisualBasic;
+using SharedProject;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

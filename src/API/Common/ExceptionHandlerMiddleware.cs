@@ -37,7 +37,15 @@ namespace API.Common
                     code = HttpStatusCode.InternalServerError;
                     result = JsonConvert.SerializeObject(validationException.ToString());
                     break;
-                
+                case ArgumentException argumentException: 
+                    code = HttpStatusCode.BadRequest;
+                    result = JsonConvert.SerializeObject(argumentException.ToString());
+                    break;
+                default:
+                    code = HttpStatusCode.BadRequest;
+                    result = JsonConvert.SerializeObject(exception.Message);
+                    break;
+
             }
 
             context.Response.ContentType = "application/json";

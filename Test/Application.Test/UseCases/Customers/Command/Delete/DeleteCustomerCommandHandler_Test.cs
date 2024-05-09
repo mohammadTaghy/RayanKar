@@ -1,17 +1,11 @@
 ﻿using Application.IRepositoryWrite;
 using Application.UseCases.Customers.Command.Delete;
 using Application.UseCases.Customers.Command;
-using Common;
 using Domain.Entities;
 using Domain.WriteEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Domain.ValueObject;
+using SharedProject;
 
 namespace Application.Test.UseCases.Customers.Command.Delete
 {

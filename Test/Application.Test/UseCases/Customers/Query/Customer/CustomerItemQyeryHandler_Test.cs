@@ -3,6 +3,8 @@ using Application.UseCases.Customers.Query;
 using Common;
 using Domain.Entities;
 using Domain.ReadEntitis;
+using SharedProject;
+using SharedProject.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

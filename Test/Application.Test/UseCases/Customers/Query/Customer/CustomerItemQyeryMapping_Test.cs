@@ -4,6 +4,7 @@ using Application.UseCases.Customers.Query;
 using AutoMapper;
 using Domain.ReadEntitis;
 using Domain.WriteEntities;
+using SharedProject.Customer;
 using Shouldly;
 using System;
 using System.Collections.Generic;

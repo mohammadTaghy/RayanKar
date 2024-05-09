@@ -7,6 +7,8 @@ using Domain.Entities;
 using Domain.ReadEntitis;
 using Domain.WriteEntities;
 using MediatR;
+using SharedProject;
+using SharedProject.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

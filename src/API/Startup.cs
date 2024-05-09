@@ -60,11 +60,13 @@ namespace API
             services.AddMemoryCache();
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options =>
+                c.AddDefaultPolicy(options =>
                 {
                     options.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("*");
                 });
             });
             configuration(services);
@@ -80,23 +82,23 @@ namespace API
         }
         public void Configure(IApplicationBuilder app)
         {
-            app.UseCustomExceptionHandler();
             app.UseSession();
-            app.UseCors();
             if (Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.UseCustomExceptionHandler();
 
             app.UseRouting();
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
 
             });
+
         }
     }
 }

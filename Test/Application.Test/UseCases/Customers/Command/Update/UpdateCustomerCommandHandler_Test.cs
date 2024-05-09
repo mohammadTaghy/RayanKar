@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using SharedProject;
 
 namespace Application.Test.UseCases.Customers.Command
 {

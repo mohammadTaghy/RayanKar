@@ -2,6 +2,7 @@
 using Application.UseCases.Customers.Query;
 using AutoMapper;
 using Domain.ReadEntitis;
+using SharedProject.Customer;
 using Shouldly;
 using System;
 using System.Collections.Generic;

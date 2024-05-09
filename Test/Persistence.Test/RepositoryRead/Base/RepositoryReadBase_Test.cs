@@ -3,6 +3,7 @@ using Application.UseCases.Customers.Query.Customers;
 using Common;
 using Domain;
 using Microsoft.AspNetCore.OData.Query;
+using SharedProject;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
