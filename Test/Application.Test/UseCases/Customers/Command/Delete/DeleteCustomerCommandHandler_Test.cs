@@ -25,7 +25,7 @@ namespace Application.Test.UseCases.Customers.Command.Delete
         public void DeleteCustomerCommandHandler_GivenNullId_ArgumentNullException()
         {
 
-            var exception = Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+             Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
 
             _writeRepoMock.Verify(p => p.DeleteItem(It.IsAny<CustomerWrite>()), Times.Never);
         }

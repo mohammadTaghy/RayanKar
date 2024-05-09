@@ -11,12 +11,16 @@ namespace Api.BDDTest.Common
 {
     public class Utilities
     {
+        protected Utilities()
+        {
+            
+        }
         public static StringContent GetRequestContent(object obj)
         {
             return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
         }
 
-        public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
+        public static async Task<T?> GetResponseContent<T>(HttpResponseMessage response)
         {
             var stringResponse = await response.Content.ReadAsStringAsync();
 

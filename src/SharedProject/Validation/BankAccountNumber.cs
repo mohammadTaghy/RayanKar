@@ -9,6 +9,10 @@ namespace SharedProject.Validation
 {
     public sealed class BankAccountNumber 
     {
+        private BankAccountNumber()
+        {
+        }
+
         public static bool Validate(string number)
         {
             number = number.ToUpper(); //IN ORDER TO COPE WITH THE REGEX BELOW

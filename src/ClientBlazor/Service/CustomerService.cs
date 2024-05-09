@@ -8,10 +8,10 @@ namespace ClientBlazor.Service
     public interface ICustomerService
     {
         Task<CustomerDto?> GetCustomerAsync(int id);
-        Task<QueryResponse<List<CustomerDto>>> GetCustomersAsync();
-        Task<CommandResponse<int>> PostCustomerAsync(CustomerDto customer);
-        Task<CommandResponse<CustomerDto>> PutCustomerAsync(CustomerDto customer);
-        Task<CommandResponse<bool>> DeleteCustomerAsync(string email);
+        Task<QueryResponse<List<CustomerDto>>?> GetCustomersAsync();
+        Task<CommandResponse<int>?> PostCustomerAsync(CustomerDto customer);
+        Task<CommandResponse<CustomerDto>?> PutCustomerAsync(CustomerDto customer);
+        Task<CommandResponse<bool>?> DeleteCustomerAsync(string email);
     }
     public class CustomerService:ICustomerService
     {
@@ -23,7 +23,7 @@ namespace ClientBlazor.Service
            
 
         }
-        public async Task<QueryResponse<List<CustomerDto>>> GetCustomersAsync()
+        public async Task<QueryResponse<List<CustomerDto>>?> GetCustomersAsync()
         {
             var response = await _httpClient.GetAsync($"api/Customer/customers?api-version=1&$top=10&$skip=0");
             return await GetResponseDeserilizes<QueryResponse<List<CustomerDto>>>(response);
@@ -36,7 +36,7 @@ namespace ClientBlazor.Service
             return await GetResponseDeserilizes<CustomerDto>(response);
 
         }
-        public async Task<CommandResponse<int>> PostCustomerAsync(CustomerDto customer)
+        public async Task<CommandResponse<int>?> PostCustomerAsync(CustomerDto customer)
         {
             if (!CustomerValidate.CommonValidate(customer, out string errorMessage))
                 return new CommandResponse<int>(System.Net.HttpStatusCode.BadRequest, errorMessage, 0);
@@ -46,7 +46,7 @@ namespace ClientBlazor.Service
         }
 
 
-        public async Task<CommandResponse<CustomerDto>> PutCustomerAsync(CustomerDto customer)
+        public async Task<CommandResponse<CustomerDto>?> PutCustomerAsync(CustomerDto customer)
         {
             if (!CustomerValidate.CommonValidate(customer, out string errorMessage))
                 return new CommandResponse<CustomerDto>(System.Net.HttpStatusCode.BadRequest, errorMessage, CustomerDto.EmptyInstance());
@@ -54,7 +54,7 @@ namespace ClientBlazor.Service
                 GetRequestContent(customer));
             return await GetResponseDeserilizes<CommandResponse<CustomerDto>>(response);
         }
-        public async Task<CommandResponse<bool>> DeleteCustomerAsync(string email)
+        public async Task<CommandResponse<bool>?> DeleteCustomerAsync(string email)
         {
             var response = await _httpClient.DeleteAsync($"/api/Customer/Customers?api-version=1&email={email}");
             return await GetResponseDeserilizes<CommandResponse<bool>>(response);
@@ -63,7 +63,7 @@ namespace ClientBlazor.Service
         {
             return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
         }
-        private static async Task<T> GetResponseDeserilizes<T>(HttpResponseMessage response)
+        private static async Task<T?> GetResponseDeserilizes<T>(HttpResponseMessage response)
         {
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();

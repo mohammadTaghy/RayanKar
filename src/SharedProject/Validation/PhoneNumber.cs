@@ -11,7 +11,10 @@ namespace SharedProject.Validation
 {
     public sealed class PhoneNumber 
     {
-        
+        private PhoneNumber()
+        {
+        }
+
         public static bool Validate(string number)
         {
             try

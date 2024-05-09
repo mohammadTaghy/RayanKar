@@ -13,7 +13,7 @@ namespace Persistence
         public TContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}API", Path.DirectorySeparatorChar);
-            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
+            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment)??string.Empty);
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
@@ -30,7 +30,7 @@ namespace Persistence
 
             var connectionString = configuration.GetConnectionString(ConnectionStringName);
 
-            return Create(connectionString);
+            return Create(connectionString?? string.Empty);
         }
 
         private TContext Create(string connectionString)

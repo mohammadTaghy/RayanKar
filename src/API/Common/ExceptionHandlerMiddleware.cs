@@ -27,7 +27,7 @@ namespace API.Common
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
+            HttpStatusCode code ;
 
             var result = string.Empty;
 

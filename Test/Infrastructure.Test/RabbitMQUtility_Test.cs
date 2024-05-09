@@ -18,11 +18,10 @@ namespace Infrastructure.Test
 
         public RabbitMQUtility_Test()
         {
-            option = Options.Create<AppSettings>(new AppSettings()
-            {
-                RabbitMQHostName = "localhost",
-                SecretKey = "F?Q2y+8bl5DQZJtw>fCY>}Z|Q=Ir#U?Y@o3(B)}[i~CK{<6yYUQn?!P6hYvhx><"
-            });
+            option = Options.Create<AppSettings>(new AppSettings(
+                "F?Q2y+8bl5DQZJtw>fCY>}Z|Q=Ir#U?Y@o3(B)}[i~CK{<6yYUQn?!P6hYvhx><",
+                "localhost")
+           );
             directQueue = new RabbitMQUtility(option);
         }
         [Fact]

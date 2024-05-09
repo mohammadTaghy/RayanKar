@@ -10,17 +10,46 @@ namespace Common
     {
         public string SecretKey { get; set; }
         public string RabbitMQHostName { get; set; }
+        public AppSettings() : this("", "")
+        {
+
+        }
+        public AppSettings(string secretKey, string rabbitMQHostName)
+        {
+            SecretKey = secretKey;
+            RabbitMQHostName = rabbitMQHostName;
+        }
+
     }
     public class MongoDatabaseOption
     {
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
+        public MongoDatabaseOption() : this("", "")
+        {
+
+        }
+        public MongoDatabaseOption(string connectionString, string databaseName)
+        {
+            ConnectionString = connectionString;
+            DatabaseName = databaseName;
+        }
+
     }
     public class DatabaseSettings
     {
-        public string ConnectionString { get; set; } = null!;
+        public string ConnectionString { get; set; }
+        public string DatabaseName { get; set; }
+        public DatabaseSettings():this("","")
+        {
+            
+        }
+        public DatabaseSettings(string connectionString, string databaseName)
+        {
+            ConnectionString = connectionString;
+            DatabaseName = databaseName;
+        }
 
-        public string DatabaseName { get; set; } = null!;
 
     }
 }

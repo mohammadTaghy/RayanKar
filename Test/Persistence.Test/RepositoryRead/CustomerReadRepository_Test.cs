@@ -29,11 +29,10 @@ namespace Persistence.Test.RepositoryRead
     {
         public CustomerReadRepository_Test() : base(
             new CustomerReadRepository(
-                Options.Create<MongoDatabaseOption>(new MongoDatabaseOption
-                {
-                    ConnectionString = "mongodb://localhost:27017",
-                    DatabaseName = "PersistanceTestDB"
-                }),
+                Options.Create<MongoDatabaseOption>(new MongoDatabaseOption(
+                    "mongodb://localhost:27017",
+                    "PersistanceTestDB"
+                )),
             new Mock<IRabbitMQUtility>().Object),
                 new CustomerRead(
                                         "MohammadTaghy",

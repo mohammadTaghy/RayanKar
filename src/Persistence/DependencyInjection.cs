@@ -25,8 +25,8 @@ namespace Persistence
 
             services.Configure<DatabaseSettings>(option =>
             {
-                option.ConnectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
-                option.DatabaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
+                option.ConnectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value??string.Empty;
+                option.DatabaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value ?? string.Empty;
             });
 
 

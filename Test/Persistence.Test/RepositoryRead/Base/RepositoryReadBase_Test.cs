@@ -29,7 +29,7 @@ namespace Persistence.Test.RepositoryRead.Base
         }
         private async Task AddToDB()
         {
-            TEntity entity = await _repository.FindOne(_entity.Id);
+            TEntity? entity = await _repository.FindOne(_entity.Id);
             if (entity==null)
             {
                 await _repository.Add(_entity, CancellationToken.None);

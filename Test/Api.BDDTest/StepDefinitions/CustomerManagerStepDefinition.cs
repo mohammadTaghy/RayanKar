@@ -113,7 +113,7 @@ namespace Api.BDDTest.StepDefinitions
         {
             HashSet<int> responseCode = new HashSet<int>() { int.Parse(table.Rows[0][0]) };
 
-            Assert.True(responseCode.First() == (int)response.StatusCode);
+            Assert.True(responseCode.First() == (int)(response?.StatusCode??0));
         }
         /// <exception cref="Xunit.Sdk.TrueException"></exception>
         /// <exception cref="FormatException"></exception>

@@ -22,7 +22,6 @@ namespace Persistence.RepositoryRead.Base
     public abstract class RepositoryReadBase<T> : IRepositoryReadBase<T> where T : class, IEntity
     {
         #region Property
-        private readonly IMongoDatabase _dB;
         protected abstract string QueueName { get;}
         private IMongoCollection<T> collection { get; set; }
         private readonly MongoClient mongoClient;
@@ -34,7 +33,7 @@ namespace Persistence.RepositoryRead.Base
         protected RepositoryReadBase(IOptions<MongoDatabaseOption> databaseSettings, IRabbitMQUtility rabbitMQUtility)
         {
             mongoClient = new MongoClient(databaseSettings.Value.ConnectionString ?? "mongodb://localhost:27017");
-            this._dB = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName ?? "Test");
+            IMongoDatabase _dB = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName ?? "Test");
             collection = _dB.GetCollection<T>(typeof(T).Name);
             this._rabbitMQUtility = rabbitMQUtility;
             SetReciveMessageEvent();
@@ -115,7 +114,7 @@ namespace Persistence.RepositoryRead.Base
                 await this.collection.DeleteOneAsync(p => p.Id == id, cancellationToken);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -141,7 +140,7 @@ namespace Persistence.RepositoryRead.Base
         }
 
         #endregion
-        public async Task<T?> FindOne(int id)=>  Queryable.Where(p => p.Id == id).FirstOrDefault();
+        public async Task<T?> FindOne(int id)=> Queryable.Where(p => p.Id == id).FirstOrDefault();
 
         public async Task<Tuple<List<T>, int>> ItemList(ODataQueryOptions<T> oDataQuery)
         {
@@ -153,7 +152,7 @@ namespace Persistence.RepositoryRead.Base
             IQueryable<T> results = oDataQuery.ApplyTo(Queryable, settings).Cast<T>();
             return new Tuple<List<T>, int>(
                 results.ToList() ,
-               results.Count()
+                results.Count()
                 );
         }
     }

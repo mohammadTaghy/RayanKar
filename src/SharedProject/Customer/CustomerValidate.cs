@@ -7,6 +7,10 @@ namespace SharedProject.Customer
 {
     public class CustomerValidate
     {
+        protected CustomerValidate()
+        {
+        }
+
         public static bool CommonValidate(CustomerDto customerWrite, out string errorMessage)
         {
             StringBuilder errors = new StringBuilder();
