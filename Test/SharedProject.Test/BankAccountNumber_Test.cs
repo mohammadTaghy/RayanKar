@@ -4,24 +4,15 @@ namespace SharedProject.Test
 {
     public class BankAccountNumber_Test
     {
-        [Fact]
-        public void BankAccountNumberr_ValidationError_Test()
+        [Theory]
+        [InlineData("IR00000000000001",false)]
+        [InlineData("IR830120010000001387998021", true)]
+        public void BankAccountNumberr_Validation_Test(string bankAcountNumber, bool expected)
         {
-            string number = "IR00000000000001";
 
-            bool result =  BankAccountNumber.Validate(number);
+            bool result =  BankAccountNumber.Validate(bankAcountNumber);
 
-            Assert.False(result);
+            Assert.Equal(expected, result);
         }
-        [Fact]
-        public void BankAccountNumberr_ValidationSuccess_Test()
-        {
-            string number = "IR830120010000001387998021";
-
-            bool valid =  BankAccountNumber.Validate(number);
-
-            Assert.True(valid);
-        }
-        
     }
 }
